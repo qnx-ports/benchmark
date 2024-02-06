@@ -13,11 +13,5 @@
     <requires value="suppress-library: autogen"/>
     <provides value="suppress-library: autogen"/>
 
-    <file name="${targetfolder}/[ARCH]/usr/lib/libgmock_main.so" />
-    <file name="${targetfolder}/[ARCH]/usr/lib/libgmock_main.so.1.13.0" />
-    <file name="${targetfolder}/[ARCH]/usr/lib/libgmock.so" />
-    <file name="${targetfolder}/[ARCH]/usr/lib/libgmock.so.1.13.0" />
-    <file name="${targetfolder}/[ARCH]/usr/lib/libgtest.so" />
-    <file name="${targetfolder}/[ARCH]/usr/lib/libgtest.so.1.13.0" />
-    <asset dest="${targetfolder}/[ARCH]/usr/bin/benchmark_tests" />
+    <asset dest="${targetfolder}/[ARCH]/usr/local/bin/benchmark_tests" />
 </shiplist>
