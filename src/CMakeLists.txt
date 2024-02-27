@@ -35,12 +35,14 @@ if (PFM_FOUND)
 endif()
 
 # pthread affinity, if available
-if(HAVE_PTHREAD_AFFINITY)
+if(NOT QNX AND HAVE_PTHREAD_AFFINITY)
   target_compile_definitions(benchmark PRIVATE -DBENCHMARK_HAS_PTHREAD_AFFINITY)
 endif()
 
 # Link threads.
-target_link_libraries(benchmark PRIVATE Threads::Threads)
+if(NOT QNX)
+  target_link_libraries(benchmark PRIVATE Threads::Threads)
+endif()
 
 target_link_libraries(benchmark PRIVATE ${BENCHMARK_CXX_LIBRARIES})
 

@@ -14,22 +14,42 @@ ADD_CASES(TC_ConsoleOut, {{"^[-]+$", MR_Next},
                           {"^Benchmark %s Time %s CPU %s Iterations$", MR_Next},
                           {"^[-]+$", MR_Next}});
 static int AddContextCases() {
-  AddCases(TC_ConsoleErr,
-           {
-               {"^%int-%int-%intT%int:%int:%int[-+]%int:%int$", MR_Default},
-               {"Running .*(/|\\\\)reporter_output_test(\\.exe)?$", MR_Next},
-               {"Run on \\(%int X %float MHz CPU s?\\)", MR_Next},
-           });
-  AddCases(TC_JSONOut,
-           {{"^\\{", MR_Default},
-            {"\"context\":", MR_Next},
-            {"\"date\": \"", MR_Next},
-            {"\"host_name\":", MR_Next},
-            {"\"executable\": \".*(/|\\\\)reporter_output_test(\\.exe)?\",",
-             MR_Next},
-            {"\"num_cpus\": %int,$", MR_Next},
-            {"\"mhz_per_cpu\": %float,$", MR_Next},
-            {"\"caches\": \\[$", MR_Default}});
+
+  #ifdef __QNX__
+    AddCases(TC_ConsoleErr,
+            {
+                {"^%int-%int-%intT%int:%int:%int[-+]%int:%int$", MR_Default},
+                {"Running .*/?reporter_output_test(\\.exe)?$", MR_Next},
+                {"Run on \\(%int X %float MHz CPU s?\\)", MR_Next},
+            });
+    AddCases(TC_JSONOut,
+            {{"^\\{", MR_Default},
+              {"\"context\":", MR_Next},
+              {"\"date\": \"", MR_Next},
+              {"\"host_name\":", MR_Next},
+              {"\"executable\": \".*(/|\\\\)?reporter_output_test(\\.exe)?\",",
+              MR_Next},
+              {"\"num_cpus\": %int,$", MR_Next},
+              {"\"mhz_per_cpu\": %float,$", MR_Next},
+              {"\"caches\": \\[$", MR_Default}});
+  #else
+    AddCases(TC_ConsoleErr,
+            {
+                {"^%int-%int-%intT%int:%int:%int[-+]%int:%int$", MR_Default},
+                {"Running .*(/|\\\\)reporter_output_test(\\.exe)?$", MR_Next},
+                {"Run on \\(%int X %float MHz CPU s?\\)", MR_Next},
+            });
+    AddCases(TC_JSONOut,
+            {{"^\\{", MR_Default},
+              {"\"context\":", MR_Next},
+              {"\"date\": \"", MR_Next},
+              {"\"host_name\":", MR_Next},
+              {"\"executable\": \".*(/|\\\\)reporter_output_test(\\.exe)?\",",
+              MR_Next},
+              {"\"num_cpus\": %int,$", MR_Next},
+              {"\"mhz_per_cpu\": %float,$", MR_Next},
+              {"\"caches\": \\[$", MR_Default}});
+  #endif
   auto const& Info = benchmark::CPUInfo::Get();
   auto const& Caches = Info.caches;
   if (!Caches.empty()) {

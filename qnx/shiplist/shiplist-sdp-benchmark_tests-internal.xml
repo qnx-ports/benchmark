@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<shiplist>
+    <id>com.qnx.${baselineId}.osr.benchmark_tests.internal</id>
+    <name>Benchmark 1.8.3 Library Tests</name>
+    <description>A microbenchmark support library</description>
+    <property key="f.support" value="Custom"/>
+    <property key="f.swtype" value="III"/>
+    <property key="f.engage" value="B"/>
+    <category>OSR</category>
+    
+    <property key="com.qnx.internal" value="true"/>
+    <!-- don't generate provides/requires tags for internal packages-->
+    <requires value="suppress-library: autogen"/>
+    <provides value="suppress-library: autogen"/>
+
+    <file name="${targetfolder}/[ARCH]/usr/lib/libgmock_main.so" />
+    <file name="${targetfolder}/[ARCH]/usr/lib/libgmock_main.so.1.13.0" />
+    <file name="${targetfolder}/[ARCH]/usr/lib/libgmock.so" />
+    <file name="${targetfolder}/[ARCH]/usr/lib/libgmock.so.1.13.0" />
+    <file name="${targetfolder}/[ARCH]/usr/lib/libgtest.so" />
+    <file name="${targetfolder}/[ARCH]/usr/lib/libgtest.so.1.13.0" />
+    <asset dest="${targetfolder}/[ARCH]/usr/bin/benchmark_tests" />
+</shiplist>

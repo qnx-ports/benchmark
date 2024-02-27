@@ -113,8 +113,13 @@ endif()
 message(STATUS "Google Benchmark version: ${VERSION}")
 
 # The version of the libraries
-set(GENERIC_LIB_VERSION ${VERSION})
-string(SUBSTRING ${VERSION} 0 1 GENERIC_LIB_SOVERSION)
+if(QNX)
+  set(GENERIC_LIB_VERSION "1.8.3")
+  string(SUBSTRING "1.8.3" 0 1 GENERIC_LIB_SOVERSION)
+elseif()
+  set(GENERIC_LIB_VERSION ${VERSION})
+  string(SUBSTRING ${VERSION} 0 1 GENERIC_LIB_SOVERSION)
+endif()
 
 # Import our CMake modules
 include(AddCXXCompilerFlag)
@@ -337,4 +342,52 @@ if (BENCHMARK_ENABLE_TESTING)
     endif()
   endif()
   add_subdirectory(test)
+endif()
+
+if (QNX)
+  # List of binary targets to install
+  set(targets_to_install args_product_test
+    basic_test
+    benchmark_gtest
+    benchmark_min_time_flag_iters_test
+    benchmark_min_time_flag_time_test
+    benchmark_name_gtest
+    benchmark_random_interleaving_gtest
+    benchmark_setup_teardown_test
+    benchmark_test
+    commandlineflags_gtest
+    complexity_test
+    diagnostics_test
+    display_aggregates_only_test
+    donotoptimize_test
+    filter_test
+    fixture_test
+    internal_threading_test
+    link_main_test
+    map_test
+    memory_manager_test
+    min_time_parse_gtest
+    multiple_ranges_test
+    options_test
+    perf_counters_gtest
+    perf_counters_test
+    register_benchmark_test
+    repetitions_test
+    report_aggregates_only_test
+    reporter_output_test
+    skip_with_error_test
+    spec_arg_test
+    spec_arg_verbosity_test
+    statistics_gtest
+    string_util_gtest
+    templated_fixture_test
+    time_unit_gtest
+    user_counters_tabular_test
+    user_counters_test
+    user_counters_thousands_test)
+
+  # Install all targets to the same directory
+  foreach(target ${targets_to_install})
+    install(TARGETS ${target} DESTINATION bin/benchmark_tests)
+  endforeach()
 endif()
